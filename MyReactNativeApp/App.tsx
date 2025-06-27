@@ -1,52 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 
 interface themeTpye {
-  backgroundcolor: String,
-  color: String
+  backgroundColor: string,
+  color: string,
+  fontSize: number,
+  ImageSize: number
 }
 
 interface PersonType {
-  name: String,
+  name: string,
   theme: themeTpye
+}
+
+interface CardType {
+  image_url: any
 }
 
 const person: PersonType = {
   name: "Tarou",
   theme: {
-    backgroundcolor: "black",
-    color: "pink"
+    backgroundColor: "white",
+    color: "black",
+    fontSize: 64,
+    ImageSize: 100
   }
 }
 
-function Profile() {
+function Card({image_url}:CardType) {
   return (
-    <img
-      src="https://i.imgur.com/MK3eW3As.jpg"
-      alt="Katherine Johnson"
-    />
-  );
+    <View>
+      <Image
+        source={image_url}
+        accessibilityLabel={person.name}
+        style={{ width: person.theme.ImageSize, height: person.theme.ImageSize }}
+      />
+      <Text>{person.name}</Text>
+    </View>
+  )
 }
 
 export default function App() {
+  const isPacked = true;
   return (
-    <div style={person.theme}>
-      <h1>Hello World!!!</h1>
-      <Text>{person.name}</Text>
-      <Profile />
+    <View style={{ flex: 1, ...person.theme, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: person.theme.fontSize, color: person.theme.color }}>Hello World!!!{isPacked && '✅'}</Text>
+      <Card image_url={require('./assets/icon.png')}></Card>
       <StatusBar style="auto" />
-    </div>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 // ここからやる
 // https://ja.react.dev/learn/describing-the-ui
